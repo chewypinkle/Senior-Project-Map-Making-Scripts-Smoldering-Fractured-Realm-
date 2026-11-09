@@ -1,0 +1,70 @@
+require(game:GetService("ServerScriptService").Runtime):Init()
+
+-- Must be at the top of every script
+
+local MapLib = game.GetMapLib:Invoke()()
+local map = MapLib.map
+
+local LightingFeature = MapLib:GetFeature("Lighting")
+
+local tween = require(map.TweenModules)
+
+local Lighting = game:GetService("Lighting")
+local atmosphere = Lighting:FindFirstChildOfClass("Atmosphere")
+
+
+-- Lighting
+-- This stays because we still want the lighting changes.
+
+LightingFeature:SetLighting({
+	Ambient = Color3.fromRGB(73, 231, 255),
+})
+
+task.wait(4)
+
+LightingFeature:EaseLighting(
+	TweenInfo.new(1.5),
+	{
+		Ambient = Color3.fromRGB(188, 188, 188),
+	},
+	{
+		ColorCorrection = {
+			Contrast = 1,
+		},
+	}
+)
+
+
+-- Atmosphere
+
+tween.tweenatmosphere(
+	atmosphere,
+	1,
+	Enum.EasingStyle.Sine,
+	Enum.EasingDirection.Out,
+	Color3.fromRGB(212, 175, 42),
+	Color3.fromRGB(255, 102, 204),
+	2.6,
+	0.28
+)
+
+
+-- Geographic Latitude
+
+tween.tweogeographiclatitude(
+	6,
+	Enum.EasingStyle.Sine,
+	Enum.EasingDirection.Out,
+	0
+)
+
+
+-- Time Of Day
+
+tween.tweentimeofday(
+	6,
+	Enum.EasingStyle.Sine,
+	Enum.EasingDirection.Out,
+	"07:24:00"
+)
+
